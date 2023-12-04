@@ -1,14 +1,30 @@
-import { Module, HttpModule, HttpService } from '@nestjs/common';
+import { HttpModule, HttpService, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import { Client } from 'pg';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
-import { ProductsModule } from './products/products.module';
+import config from './config';
 import { DatabaseModule } from './database/database.module';
 import { enviroments } from './enviroments';
-import config from './config';
+import { ProductsModule } from './products/products.module';
+import { UsersModule } from './users/users.module';
+
+const client = new Client({
+  user: 'root',
+  host: 'localhost',
+  database: 'my_db',
+  password: '123456',
+  port: 5432,
+});
+
+client.query('SELECT * FROM task', (err, res) => {
+  console.error(err);
+  console.log(res.rows);
+});
+
+client.connect();
 
 @Module({
   imports: [
