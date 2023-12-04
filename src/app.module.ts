@@ -1,7 +1,6 @@
 import { HttpModule, HttpService, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
-import { Client } from 'pg';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -11,20 +10,20 @@ import { enviroments } from './enviroments';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 
-const client = new Client({
-  user: 'root',
-  host: 'localhost',
-  database: 'my_db',
-  password: '123456',
-  port: 5432,
-});
+// const client = new Client({
+//   user: 'root',
+//   host: 'localhost',
+//   database: 'my_db',
+//   password: '123456',
+//   port: 5432,
+// });
 
-client.query('SELECT * FROM task', (err, res) => {
-  console.error(err);
-  console.log(res.rows);
-});
+// client.query('SELECT * FROM task', (err, res) => {
+//   console.error(err);
+//   console.log(res.rows);
+// });
 
-client.connect();
+// client.connect();
 
 @Module({
   imports: [
