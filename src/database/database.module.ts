@@ -22,9 +22,20 @@ client.connect();
   imports: [
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigType<typeof config>) => {
-        const { user, host, db, password, port } = configService.mysql;
+        // const { user, host, db, password, port } = configService.mysql;
+        // return {
+        //   type: 'mysql',
+        //   host,
+        //   port,
+        //   username: user,
+        //   password,
+        //   database: db,
+        //   synchronize: true,
+        //   autoLoadEntities: true,
+        // };
+        const { user, host, db, password, port } = configService.postgres;
         return {
-          type: 'mysql',
+          type: 'postgres',
           host,
           port,
           username: user,
