@@ -30,7 +30,7 @@ client.connect();
           username: user,
           password,
           database: db,
-          synchronize: false,
+          synchronize: true,
           autoLoadEntities: true,
         };
       },
