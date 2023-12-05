@@ -41,7 +41,7 @@ client.connect();
           username: user,
           password,
           database: db,
-          synchronize: true,
+          synchronize: true, // Solo para desarrollo (no usar en producción)
           autoLoadEntities: true,
         };
       },
