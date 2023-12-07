@@ -3,7 +3,6 @@ import { ConfigService } from '@nestjs/config';
 import { Client } from 'pg';
 
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
-import { Order } from '../entities/order.entity';
 import { User } from '../entities/user.entity';
 
 import { InjectRepository } from '@nestjs/typeorm';
@@ -57,15 +56,15 @@ export class UsersService {
     return this.userRepo.delete(id);
   }
 
-  async getOrderByUser(id: number): Promise<Order> {
-    const user = await this.findOne(id);
-    const products = await this.productsService.findAll();
-    return {
-      date: new Date(),
-      user,
-      products,
-    };
-  }
+  // async getOrderByUser(id: number): Promise<Order> {
+  //   const user = await this.findOne(id);
+  //   const products = await this.productsService.findAll();
+  //   return {
+  //     date: new Date(),
+  //     user,
+  //     products,
+  //   };
+  // }
 
   getTasks() {
     return this.client.query('SELECT * FROM tasks');
