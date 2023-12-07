@@ -2,11 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Brand } from './brand.entity';
+import { Category } from './category.entity';
 
 @Entity()
 export class Product {
@@ -37,4 +40,10 @@ export class Product {
   // 1:n  relaciona con el decorador ManyToOne
   @ManyToOne(() => Brand, (brand) => brand.products)
   brand: Brand;
+
+  // N:N va en los dos lados de la relacion aqui en product y en category
+  // el decorador JoinTable() es para crear la tabla intermedia y se debe colocar en uno de los dos lados de la relacion
+  @ManyToMany(() => Category, (category) => category.products)
+  @JoinTable()
+  categories: Category[];
 }
