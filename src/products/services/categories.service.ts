@@ -16,7 +16,9 @@ export class CategoriesService {
   }
 
   findOne(id: number) {
-    const category = this.categoriesRepo.findOne(id);
+    const category = this.categoriesRepo.findOne(id, {
+      relations: ['products'],
+    });
     if (!category) {
       throw new NotFoundException(`Category #${id} not found`);
     }
