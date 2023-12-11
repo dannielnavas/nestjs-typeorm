@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -12,6 +13,7 @@ import { Brand } from './brand.entity';
 import { Category } from './category.entity';
 
 @Entity()
+@Index(['price', 'stock']) // Retorna de forma mas rapide de esta forma se hace con varios campos
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
@@ -22,6 +24,7 @@ export class Product {
   @Column({ type: 'text', nullable: false })
   description: string;
 
+  @Index() // para crear un indice en la base de datos
   @Column({ type: 'int', nullable: false })
   price: number;
 
