@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -12,7 +13,7 @@ import {
 import { Brand } from './brand.entity';
 import { Category } from './category.entity';
 
-@Entity()
+@Entity({ name: 'products' })
 @Index(['price', 'stock']) // Retorna de forma mas rapide de esta forma se hace con varios campos
 export class Product {
   @PrimaryGeneratedColumn()
@@ -34,19 +35,32 @@ export class Product {
   @Column({ type: 'varchar', nullable: false })
   image: string;
 
-  @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    name: 'create_at',
+  })
   createAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @UpdateDateColumn({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    name: 'update_at',
+  })
   updateAt: Date;
 
   // 1:n  relaciona con el decorador ManyToOne
   @ManyToOne(() => Brand, (brand) => brand.products)
+  @JoinColumn({ name: 'brand_id' })
   brand: Brand;
 
   // N:N va en los dos lados de la relacion aqui en product y en category
   // el decorador JoinTable() es para crear la tabla intermedia y se debe colocar en uno de los dos lados de la relacion
   @ManyToMany(() => Category, (category) => category.products)
-  @JoinTable()
+  @JoinTable({
+    name: 'products_has_categories', // nombre de la tabla intermedia
+    joinColumn: { name: 'product_id' }, // nombre de la columna que hace referencia a la entidad actual
+    inverseJoinColumn: { name: 'category_id' }, // nombre de la columna que hace referencia a la entidad con la que se relaciona
+  })
   categories: Category[];
 }
