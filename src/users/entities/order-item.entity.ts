@@ -7,24 +7,28 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+import { Exclude } from 'class-transformer';
 import { Product } from '../../products/entities/product.entity';
 import { Order } from './order.entity';
 
 @Entity()
 export class OrderItem {
   @PrimaryGeneratedColumn()
+  @Exclude()
   id: number;
 
   @CreateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
+  @Exclude()
   createAt: Date;
 
   @UpdateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
+  @Exclude()
   updateAt: Date;
 
   @Column({ type: 'int' }) // columna que se agrega a la relacion
