@@ -1,4 +1,6 @@
 import { HttpModule, HttpService, Module } from '@nestjs/common';
+// TODO: update
+// ahora el HttpService se toma de axion y no de common @nestjs/axios
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 
