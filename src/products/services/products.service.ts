@@ -24,6 +24,7 @@ export class ProductsService {
   findAll(params?: FilterProductDto) {
     if (params) {
       const where: FindConditions<Product> = {};
+      // en la nueva version de typeorm se usa FindOptionsWhere
       const { limit, offset } = params;
       const { minPrice, maxPrice } = params;
       if (minPrice && maxPrice) {
@@ -43,6 +44,12 @@ export class ProductsService {
   }
 
   async findOne(id: number) {
+    // TODO: update
+    // para findOne se pasa ahora por las options y no como primer parametro el id
+    // const product = await this.productRepo.findOne({
+    //   where: { id },
+    //   relations: ['brand'],
+    // });
     const product = await this.productRepo.findOne(id, {
       relations: ['brand', 'categories'],
     });
@@ -61,11 +68,19 @@ export class ProductsService {
     // newProduct.image = data.image;
     const newProduct = this.productRepo.create(data);
     if (data.brandId) {
+      // TODO: update
+      // ahora no se usa el create sino el findOne si no findOneBy
+      // const brand = await this.brandsService.findOneBy({ id: data.brandId })
       const brand = await this.brandsService.findOne(data.brandId);
       newProduct.brand = brand;
     }
 
     if (data.categoriesIds) {
+      // TODO: update
+      // findByIds en la nueva version es deprecated de usa findBy  con el operador in
+      // const categories = await this.categoriesRepo.findBy({
+      // id: In(data.categoriesIds),
+      // });
       const categories = await this.categoriesRepo.findByIds(
         data.categoriesIds,
       );
