@@ -2,8 +2,6 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
 
   <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
     <p align="center">
@@ -29,7 +27,7 @@
 ## Installation
 
 ```bash
-$ npm install
+npm install
 ```
 
 ## Running the app
@@ -71,3 +69,18 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## para la actualización de typeorm
+
+hay que cambiar los scripts del package.json por los siguientes
+
+```bash
+"typeorm": "typeorm-ts-node-esm -d ./src/config/database/mysql/data-source.ts",
+    "migrations:generate": "npm run build && npm run typeorm -- migration:generate",
+    "migrations:run": "npm run typeorm -- migration:run",
+    "migrations:show": "npm run typeorm -- migration:show",
+    "migrations:drop": "npm run typeorm -- migration:drop",
+    "typeorm:revert-migration": "npm run typeorm -d ./typeorm.data-source.ts -- migration:revert",
+    "typeorm:clear": "npm run typeorm cache:clear",
+    "seed": "ts-node -r tsconfig-paths/register src/seed.ts"
+```
